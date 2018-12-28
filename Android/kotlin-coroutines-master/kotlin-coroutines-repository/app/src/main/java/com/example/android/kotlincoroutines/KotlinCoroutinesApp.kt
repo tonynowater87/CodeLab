@@ -17,8 +17,10 @@
 package com.example.android.kotlincoroutines
 
 import android.app.Application
+import android.util.Log
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy.KEEP
+import androidx.work.ExistingPeriodicWorkPolicy.REPLACE
 import androidx.work.NetworkType.UNMETERED
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
@@ -53,13 +55,13 @@ class KotlinCoroutinesApp : Application() {
 
         // Specify that the work should attempt to run every day
         val work = PeriodicWorkRequest
-            .Builder(RefreshMainDataWork::class.java, 1, TimeUnit.DAYS)
-            .setConstraints(constraints)
+            .Builder(RefreshMainDataWork::class.java, 10, TimeUnit.SECONDS)
+            //.setConstraints(constraints)
             .build()
 
         // Enqueue it work WorkManager, keeping any previously scheduled jobs for the same
         // work.
         WorkManager.getInstance()
-            .enqueueUniquePeriodicWork(RefreshMainDataWork::class.java.name, KEEP, work)
+            .enqueueUniquePeriodicWork(RefreshMainDataWork::class.java.name, REPLACE, work)
     }
 }

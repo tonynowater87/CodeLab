@@ -18,8 +18,10 @@ package com.example.android.kotlincoroutines.main
 
 import android.content.Context
 import android.support.annotation.WorkerThread
+import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import kotlinx.coroutines.runBlocking
 
 /**
  * Worker job to refresh refresh titles from the network while the app is in the background.
@@ -37,13 +39,26 @@ class RefreshMainDataWork(context: Context, params: WorkerParameters) : Worker(c
      * start just enough to run this [Worker].
      */
     override fun doWork(): Result {
+        Log.d("DEBUG", "Dowork")
         return refreshTitle()
     }
 
     /**
      * Refresh the title from the network using [TitleRepository]
      */
-    // TODO: Implement refreshTitle using coroutines and runBlocking
     @WorkerThread
-    private fun refreshTitle(): Result = Result.SUCCESS
+    private fun refreshTitle(): Result {
+        return runBlocking {
+            val db = getDatabase(applicationContext)
+            val repository = TitleRepository(MainNetworkImpl, db.titleDao)
+            try {
+                repository.refreshTitle()
+                Log.d("DEBUG", "Dowork SUCCESS")
+                Result.SUCCESS
+            } catch (error: TitleRepository.TitleRefreshError) {
+                Log.d("DEBUG", "Dowork FAILURE")
+                Result.FAILURE
+            }
+        }
+    }
 }
