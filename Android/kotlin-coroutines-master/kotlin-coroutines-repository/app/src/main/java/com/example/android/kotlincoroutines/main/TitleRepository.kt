@@ -22,9 +22,14 @@ import com.example.android.kotlincoroutines.main.TitleRepository.RefreshState.Su
 import com.example.android.kotlincoroutines.main.TitleRepository.RefreshState.Error
 import com.example.android.kotlincoroutines.main.TitleRepository.RefreshState.Loading
 import com.example.android.kotlincoroutines.util.BACKGROUND
+import com.example.android.kotlincoroutines.util.FakeNetworkCall
 import com.example.android.kotlincoroutines.util.FakeNetworkError
+import com.example.android.kotlincoroutines.util.FakeNetworkException
 import com.example.android.kotlincoroutines.util.FakeNetworkSuccess
 import kotlin.LazyThreadSafetyMode.NONE
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 /**
  * TitleRepository provides an interface to fetch a title or request a new one be generated.
@@ -80,6 +85,55 @@ class TitleRepository(private val network: MainNetwork, private val titleDao: Ti
         }
     }
 
+    // Example of suspendCoroutine
+
+    /**
+     * A class that passes strings to callbacks
+     */
+    abstract class Call {
+        abstract fun addCallback(callback: (String) -> Unit)
+    }
+
+    /**
+     * Exposes callback based API as a suspend function so it can be used in coroutines.
+     */
+    suspend fun convertToSuspend(call: Call): String {
+        // 1: suspendCoroutine and will immediately *suspend*
+        // the coroutine. It can be only *resumed* by the
+        // continuation object passed to the block.
+        return suspendCoroutine { continuation ->
+            // 2: pass a block to suspendCoroutine to register callbacks
+
+            // 3: add a callback to wait for the result
+            call.addCallback { value ->
+                // 4: use continuation.resume to *resume* the coroutine
+                // with the value. The value passed to resume will be
+                // the result of suspendCoroutine.
+                continuation.resume(value)
+            }
+        }
+    }
+
+    // Example of using convertToSuspend to use a callback API in coroutines
+
+    suspend fun exampleUsage() {
+        val call = network.fetchNewWelcome()
+        //convertToSuspend(call) // suspends until the long running call completes
+    }
+
+    // Example usage of await
+
+    suspend fun exampleAwaitUsage() {
+        try {
+            val call = network.fetchNewWelcome()
+            // suspend until fetchNewWelcome returns a result or throws an error
+            val result = call.await()
+            // resume will cause await to return the network result
+        } catch (error: FakeNetworkException) {
+            // resumeWithException will cause await to throw the error
+        }
+    }
+
     /**
      * Class that represents the state of a refresh request.
      *
@@ -132,4 +186,13 @@ class TitleRefreshError(cause: Throwable) : Throwable(cause.message, cause)
  * @return network result after completion
  * @throws Throwable original exception from library if network request fails
  */
-// TODO: Implement FakeNetworkCall<T>.await() here
+suspend fun <T> FakeNetworkCall<T>.await(): T {
+    return suspendCoroutine { continuation ->
+        addOnResultListener { result ->
+            when (result) {
+                is FakeNetworkSuccess<T> -> continuation.resume(result.data)
+                is FakeNetworkError -> continuation.resumeWithException(result.error)
+            }
+        }
+    }
+}
