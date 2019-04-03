@@ -27,8 +27,8 @@
             app:destination="@id/flow_step_one_dest"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
         <!-- END STEP 7.1 -->
 
     </fragment>
@@ -64,14 +64,6 @@
         </action>
     </fragment>
 
-    <!-- TODO STEP 4 Create a new navigation destination pointing to SettingsFragment -->
-    <!--<fragment-->
-        <!--android:id="@+id/settings_dest"-->
-        <!--android:name="com.example.android.codelabs.navigation.SettingsFragment"-->
-        <!--android:label="@string/settings"-->
-        <!--tools:layout="@layout/settings_fragment" />-->
-    <!-- TODO END STEP 4 -->
-
     <fragment
         android:id="@+id/deeplink_dest"
         android:name="com.example.android.codelabs.navigation.DeepLinkFragment"
@@ -88,10 +80,12 @@
         <!-- TODO END STEP 12.1 -->
     </fragment>
 
+    <!-- STEP 4 Create a new navigation destination pointing to SettingsFragment -->
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.android.codelabs.navigation.SettingsFragment"
         android:label="settings_fragment"
         tools:layout="@layout/settings_fragment" />
-    
+    <!-- END STEP 4 -->
+
 </navigation>
