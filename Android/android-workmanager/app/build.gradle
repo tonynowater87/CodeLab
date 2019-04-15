@@ -53,7 +53,8 @@ android {
 }
 
 dependencies {
-    implementation "android.arch.work:work-runtime-ktx:$versions.work"
+    implementation "androidx.work:work-runtime-ktx:$versions.work"
+    implementation "androidx.work:work-rxjava2:$versions.work"
     implementation "androidx.appcompat:appcompat:$versions.androidx"
     implementation "androidx.constraintlayout:constraintlayout:$versions.constraint_layout"
     implementation "androidx.legacy:legacy-support-v4:$versions.androidx"

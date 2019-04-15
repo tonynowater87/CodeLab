@@ -24,8 +24,8 @@ import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkInfo
 import androidx.work.WorkManager
-import androidx.work.WorkStatus
 import com.example.background.workers.BlurWorker
 import com.example.background.workers.CleanUpWorker
 import com.example.background.workers.SaveFileWorker
@@ -38,10 +38,10 @@ class BlurViewModel : ViewModel() {
     internal var imageUri: Uri? = null
     internal var outputUri: Uri? = null
 
-    internal val outputStatus: LiveData<List<WorkStatus>>
+    internal val outputStatus: LiveData<List<WorkInfo>>
 
     init {
-        outputStatus = mWorkManager.getStatusesByTagLiveData(TAG_OUTPUT)
+        outputStatus = mWorkManager.getWorkInfosByTagLiveData(TAG_OUTPUT)
     }
 
     private fun uriOrNull(uriString: String?): Uri? {
