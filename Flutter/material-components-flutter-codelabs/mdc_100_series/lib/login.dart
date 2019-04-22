@@ -20,7 +20,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // TODO: Add text editing controllers (101)
+
+  final userNameController = TextEditingController();
+  final passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,8 +43,51 @@ class _LoginPageState extends State<LoginPage> {
             // TODO: Wrap Username with AccentColorOverride (103)
             // TODO: Remove filled: true values (103)
             // TODO: Wrap Password with AccentColorOverride (103)
-            // TODO: Add TextField widgets (101)
-            // TODO: Add button bar (101)
+            TextField(
+              controller: userNameController,
+              decoration: InputDecoration(
+                  filled: false,
+                  border: OutlineInputBorder(),
+                  hintText: "input name",
+                  suffixIcon: Image.asset('assets/diamond.png'),
+                  prefixIcon: Image.asset('assets/diamond.png'),
+                  labelText: "Username"),
+            ),
+            SizedBox(height: 20.0),
+            TextField(
+              controller: passwordController,
+              decoration: InputDecoration(filled: true, labelText: "Password"),
+              obscureText: true,
+            ),
+            ButtonBar(
+              children: <Widget>[
+                IconButton(
+                  icon: Image.asset('assets/diamond.png'),
+                  onPressed: (){
+
+                  },
+                ),
+                FloatingActionButton(
+                  child: Text("FAB"),
+                  onPressed: (){
+
+                  },
+                ),
+                FlatButton(
+                  child: Text('CLEAR'),
+                  onPressed: (){
+                    userNameController.clear();
+                    passwordController.clear();
+                  },
+                ),
+                RaisedButton(
+                  child: Text('NEXT'),
+                  onPressed: (){
+                    Navigator.pop(context);
+                  },
+                )
+              ],
+            )
           ],
         ),
       ),
