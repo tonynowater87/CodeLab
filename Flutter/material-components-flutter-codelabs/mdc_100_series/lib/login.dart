@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import 'package:flutter/material.dart';
+import 'colors.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -20,7 +21,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -40,49 +40,45 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
             SizedBox(height: 120.0),
-            // TODO: Wrap Username with AccentColorOverride (103)
-            // TODO: Remove filled: true values (103)
-            // TODO: Wrap Password with AccentColorOverride (103)
-            TextField(
-              controller: userNameController,
-              decoration: InputDecoration(
-                  filled: false,
-                  border: OutlineInputBorder(),
-                  hintText: "input name",
-                  suffixIcon: Image.asset('assets/diamond.png'),
-                  prefixIcon: Image.asset('assets/diamond.png'),
-                  labelText: "Username"),
-            ),
+            AccentColorOverride(
+                color: kShrineBrown900,
+                child: TextField(
+                  controller: userNameController,
+                  decoration: InputDecoration(
+                      hintText: "input name",
+                      suffixIcon: Image.asset('assets/diamond.png'),
+                      prefixIcon: Image.asset('assets/diamond.png'),
+                      labelText: "Username"),
+                )),
             SizedBox(height: 20.0),
-            TextField(
-              controller: passwordController,
-              decoration: InputDecoration(filled: true, labelText: "Password"),
-              obscureText: true,
+            AccentColorOverride(
+              color: kShrineBrown900,
+              child: TextField(
+                controller: passwordController,
+                decoration: InputDecoration(labelText: "Password"),
+                obscureText: true,
+              ),
             ),
             ButtonBar(
               children: <Widget>[
                 IconButton(
                   icon: Image.asset('assets/diamond.png'),
-                  onPressed: (){
-
-                  },
+                  onPressed: () {},
                 ),
                 FloatingActionButton(
                   child: Text("FAB"),
-                  onPressed: (){
-
-                  },
+                  onPressed: () {},
                 ),
                 FlatButton(
                   child: Text('CLEAR'),
-                  onPressed: (){
+                  onPressed: () {
                     userNameController.clear();
                     passwordController.clear();
                   },
                 ),
                 RaisedButton(
                   child: Text('NEXT'),
-                  onPressed: (){
+                  onPressed: () {
                     Navigator.pop(context);
                   },
                 )
@@ -96,3 +92,21 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 // TODO: Add AccentColorOverride (103)
+class AccentColorOverride extends StatelessWidget {
+  const AccentColorOverride({Key key, this.color, this.child})
+      : super(key: key);
+
+  final Color color;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Theme(
+      child: child,
+      data: Theme.of(context).copyWith(
+        accentColor: color,
+        brightness: Brightness.dark,
+      ),
+    );
+  }
+}

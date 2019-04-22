@@ -77,7 +77,7 @@ class HomePage extends StatelessWidget {
       return Card(
           clipBehavior: Clip.antiAlias,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               AspectRatio(
                 aspectRatio: 18.0 / 11.0,
@@ -88,20 +88,21 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(16, 12, 16, 8),
+                padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      product.name,
-                      style: themeData.textTheme.title,
+                      product == null ? '' : product.name,
+                      style: themeData.textTheme.button,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
-                    SizedBox(height: 8.0),
+                    SizedBox(height: 4.0),
                     Text(
                       numberFormat.format(product.price),
-                      style: themeData.textTheme.body2,
+                      style: themeData.textTheme.caption,
                     ),
                   ],
                 ),
