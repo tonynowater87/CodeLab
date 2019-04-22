@@ -13,9 +13,11 @@
 // limitations under the License.
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'model/product.dart';
+import 'model/products_repository.dart';
 
 class HomePage extends StatelessWidget {
-  // TODO: Make a collection of cards (102)
   // TODO: Add a variable for Category (104)
   @override
   Widget build(BuildContext context) {
@@ -54,33 +56,58 @@ class HomePage extends StatelessWidget {
         body: GridView.count(
           crossAxisCount: 2, //設定有幾行
           childAspectRatio: 1 / 1, //寬和高的比例
-          padding: EdgeInsets.all(16.0),
-          children: <Widget>[
-            Card(
-              clipBehavior: Clip.antiAlias,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  AspectRatio(
-                    aspectRatio: 18.0 / 11.0,
-                    child: Image.asset('assets/diamond.png'),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(20, 10, 20, 8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text("Title"),
-                        SizedBox(height: 8.0),
-                        Text("Content"),
-                      ],
-                    ),
-                  )
-                ],
-              )
-            ),
-            Card()
-          ],
+          crossAxisSpacing: 5,//項目橫向間距
+          mainAxisSpacing: 5,//項目直向間距
+          padding: EdgeInsets.all(16.0),//GridView四邊的padding
+          children: generateCards(context),
         ));
+  }
+
+  List<Card> generateCards(BuildContext context) {
+    List<Product> products = ProductsRepository.loadProducts(Category.all);
+    if (products == null || products.isEmpty) {
+      print(products.toString());
+      return const <Card>[];
+    }
+
+    final ThemeData themeData = Theme.of(context);
+    final NumberFormat numberFormat = NumberFormat.simpleCurrency(locale: Localizations.localeOf(context).toString());
+
+    return products.map((product) {
+      return Card(
+          clipBehavior: Clip.antiAlias,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              AspectRatio(
+                aspectRatio: 18.0 / 11.0,
+                child: Image.asset(
+                  product.assetName,
+                  package: product.assetPackage,
+                  fit: BoxFit.fill,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(16, 12, 16, 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      product.name,
+                      style: themeData.textTheme.title,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    SizedBox(height: 8.0),
+                    Text(
+                      numberFormat.format(product.price),
+                      style: themeData.textTheme.body2,
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ));
+    }).toList();
   }
 }

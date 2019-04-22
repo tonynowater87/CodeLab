@@ -14,7 +14,7 @@
 
 import 'package:flutter/foundation.dart';
 
-enum Category { all, accessories, clothing, home, }
+enum Category { all, accessories, clothing, home, wtf}
 
 class Product {
   const Product({
