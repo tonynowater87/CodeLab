@@ -54,22 +54,24 @@ class ShrineApp extends StatelessWidget {
 final ThemeData _kShrineTheme = _buildShrineTheme();
 
 ThemeData _buildShrineTheme() {
-  final ThemeData base = ThemeData.light();
+  final ThemeData base = ThemeData.dark();
   return base.copyWith(
-    accentColor: kShrineBrown900,
-    primaryColor: kShrinePink100,
+    accentColor: kShrineAltDarkGrey,
+    primaryColor: kShrineAltDarkGrey,
     buttonTheme: base.buttonTheme.copyWith(
-      buttonColor: kShrinePink100,
+      buttonColor: kShrineAltYellow,
       textTheme: ButtonTextTheme.normal,
     ),
-    scaffoldBackgroundColor: kShrineBackgroundWhite,
-    cardColor: kShrineBackgroundWhite,
+    scaffoldBackgroundColor: kShrineAltDarkGrey,
+    cardColor: kShrineAltDarkGrey,
     textSelectionColor: kShrinePink100,
     errorColor: kShrineErrorRed,
     textTheme: _buildShrineTextTheme(base.textTheme),
-    accentTextTheme: _buildShrineTextTheme(base.accentTextTheme),
     primaryTextTheme: _buildShrineTextTheme(base.primaryTextTheme),
-    primaryIconTheme: base.primaryIconTheme.copyWith(color: kShrineBrown900),
+    accentTextTheme: _buildShrineTextTheme(base.accentTextTheme),
+    primaryIconTheme: base.iconTheme.copyWith(
+        color: kShrineAltYellow
+    ),
     /*inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(),
     ),*/
@@ -80,20 +82,21 @@ ThemeData _buildShrineTheme() {
   );
 }
 
-// TODO: Build a Shrine Text Theme (103);
 TextTheme _buildShrineTextTheme(TextTheme base) {
-  return base
-      .copyWith(
-        headline: base.headline.copyWith(fontWeight: FontWeight.w500),
-        title: base.title.copyWith(fontSize: 18.0),
-        caption: base.caption.copyWith(
-          fontWeight: FontWeight.w400,
-          fontSize: 14.0,
-        ),
-      )
-      .apply(
-        fontFamily: 'Rubik',
-        displayColor: kShrineBrown900,
-        bodyColor: kShrineBrown900,
-      );
+  return base.copyWith(
+    headline: base.headline.copyWith(
+      fontWeight: FontWeight.w500,
+    ),
+    title: base.title.copyWith(
+        fontSize: 18.0
+    ),
+    caption: base.caption.copyWith(
+      fontWeight: FontWeight.w400,
+      fontSize: 14.0,
+    ),
+  ).apply(
+    fontFamily: 'Rubik',
+    displayColor: kShrineSurfaceWhite,
+    bodyColor: kShrineSurfaceWhite,
+  );
 }

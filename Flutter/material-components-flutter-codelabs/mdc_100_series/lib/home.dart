@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
     // TODO: Pass Category variable to AsymmetricView (104)
     return Scaffold(
         appBar: AppBar(
-          brightness: Brightness.light, //可以調整status bar的顏色
+          brightness: Brightness.dark, //可以調整status bar的顏色
           leading: IconButton(
               icon: Icon(
                 Icons.menu,

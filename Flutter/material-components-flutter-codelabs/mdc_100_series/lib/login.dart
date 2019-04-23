@@ -35,25 +35,28 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(height: 80.0),
             Column(
               children: <Widget>[
-                Image.asset('assets/diamond.png'),
+                Image.asset(
+                  'assets/diamond.png',
+                  color: kShrineBackgroundWhite,
+                ),
                 SizedBox(height: 16.0),
                 Text('SHRINE'),
               ],
             ),
             SizedBox(height: 120.0),
             AccentColorOverride(
-                color: kShrineBrown900,
+                color: kShrineAltYellow,
                 child: TextField(
                   controller: userNameController,
                   decoration: InputDecoration(
                       hintText: "input name",
-                      suffixIcon: Image.asset('assets/diamond.png'),
-                      prefixIcon: Image.asset('assets/diamond.png'),
+                      /*suffixIcon: Image.asset('assets/diamond.png'),
+                      prefixIcon: Image.asset('assets/diamond.png'),*/
                       labelText: "Username"),
                 )),
             SizedBox(height: 20.0),
             AccentColorOverride(
-              color: kShrineBrown900,
+              color: kShrineAltYellow,
               child: TextField(
                 controller: passwordController,
                 decoration: InputDecoration(labelText: "Password"),
@@ -82,7 +85,10 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 RaisedButton(
                   elevation: 8,
-                  shape: CutCornersBorder(),
+                  textColor: kShrineAltDarkGrey,
+                  /*shape: CutCornersBorder(),*/
+                  shape: BeveledRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(7))),
                   child: Text('NEXT'),
                   onPressed: () {
                     Navigator.pop(context);
