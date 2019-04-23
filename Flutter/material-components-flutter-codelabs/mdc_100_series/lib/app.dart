@@ -19,19 +19,33 @@ import 'home.dart';
 import 'login.dart';
 import 'colors.dart';
 import 'supplemental/cut_corners_border.dart';
+import 'category_menu_page.dart';
 
-// TODO: Convert ShrineApp to stateful widget (104)
-class ShrineApp extends StatelessWidget {
+class ShrineApp extends StatefulWidget {
+  @override
+  _ShrineAppState createState() {
+    return new _ShrineAppState();
+  }
+}
+
+class _ShrineAppState extends State<ShrineApp> {
+  Category _currentCategory = Category.all;
+
+  void _onCategoryTap(Category category) {
+    setState(() {
+      _currentCategory = category;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Shrine',
       home: Backdrop(
           currentCategory: Category.all,
-          frontLayer: HomePage(),
-          backLayer: Container(
-            color: kShrinePink100,
-          ),
+          frontLayer: HomePage(category: _currentCategory,),
+          backLayer: CategoryMenuPage(
+              currentCategory: _currentCategory, onCategoryTap: _onCategoryTap),
           frontTitle: Text("SHRINE"),
           backTitle: Text("MENU")),
       initialRoute: '/login',
@@ -87,16 +101,16 @@ ThemeData _buildShrineTheme() {
 TextTheme _buildShrineTextTheme(TextTheme base) {
   return base
       .copyWith(
-    headline: base.headline.copyWith(fontWeight: FontWeight.w500),
-    title: base.title.copyWith(fontSize: 18.0),
-    caption: base.caption.copyWith(
-      fontWeight: FontWeight.w400,
-      fontSize: 14.0,
-    ),
-  )
+        headline: base.headline.copyWith(fontWeight: FontWeight.w500),
+        title: base.title.copyWith(fontSize: 18.0),
+        caption: base.caption.copyWith(
+          fontWeight: FontWeight.w400,
+          fontSize: 14.0,
+        ),
+      )
       .apply(
-    fontFamily: 'Rubik',
-    displayColor: kShrineBrown900,
-    bodyColor: kShrineBrown900,
-  );
+        fontFamily: 'Rubik',
+        displayColor: kShrineBrown900,
+        bodyColor: kShrineBrown900,
+      );
 }
