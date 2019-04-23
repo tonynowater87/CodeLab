@@ -56,7 +56,7 @@ class AsymmetricView extends StatelessWidget {
       return Container(
         width: width,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          padding: EdgeInsets.symmetric(horizontal: 16.0),//child的padding
           child: column,
         ),
       );
@@ -88,7 +88,7 @@ class AsymmetricView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       scrollDirection: Axis.horizontal,
-      padding: EdgeInsets.fromLTRB(0.0, 34.0, 16.0, 44.0),
+      padding: EdgeInsets.fromLTRB(0.0, 34.0, 16.0, 44.0),//ListView的padding
       children: _buildColumns(context),
     );
   }

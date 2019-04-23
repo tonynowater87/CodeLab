@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'model/product.dart';
 import 'model/products_repository.dart';
+import 'supplemental/asymmetric_view.dart';
 
 class HomePage extends StatelessWidget {
   // TODO: Add a variable for Category (104)
@@ -25,6 +26,7 @@ class HomePage extends StatelessWidget {
     // TODO: Pass Category variable to AsymmetricView (104)
     return Scaffold(
         appBar: AppBar(
+          brightness: Brightness.light, //可以調整status bar的顏色
           leading: IconButton(
               icon: Icon(
                 Icons.menu,
@@ -38,29 +40,35 @@ class HomePage extends StatelessWidget {
             IconButton(
                 icon: Icon(
                   Icons.search,
-                  semanticLabel: "search",
+                  semanticLabel: "search button",
                 ),
                 onPressed: () {
                   print("search");
                 }),
             IconButton(
                 icon: Icon(
-                  Icons.settings,
-                  semanticLabel: "settings",
+                  Icons.filter_list,
+                  semanticLabel: "filter button",
                 ),
                 onPressed: () {
                   print("settings");
                 })
           ],
         ),
-        body: GridView.count(
-          crossAxisCount: 2, //設定有幾行
-          childAspectRatio: 1 / 1, //寬和高的比例
-          crossAxisSpacing: 5,//項目橫向間距
-          mainAxisSpacing: 5,//項目直向間距
-          padding: EdgeInsets.all(16.0),//GridView四邊的padding
-          children: generateCards(context),
-        ));
+        body: AsymmetricView(products: ProductsRepository.loadProducts(Category.all)),
+        /*body: GridView.count(
+          crossAxisCount: 2,
+          //設定有幾行
+          childAspectRatio: 1 / 1,
+          //寬和高的比例
+          crossAxisSpacing: 5,
+          //項目橫向間距
+          mainAxisSpacing: 5,
+          //項目直向間距
+          padding: EdgeInsets.all(16.0),
+          //GridView四邊的padding
+          children: generateCards(context),)*/
+        );
   }
 
   List<Card> generateCards(BuildContext context) {
@@ -71,10 +79,12 @@ class HomePage extends StatelessWidget {
     }
 
     final ThemeData themeData = Theme.of(context);
-    final NumberFormat numberFormat = NumberFormat.simpleCurrency(locale: Localizations.localeOf(context).toString());
+    final NumberFormat numberFormat = NumberFormat.simpleCurrency(
+        locale: Localizations.localeOf(context).toString());
 
     return products.map((product) {
       return Card(
+          elevation: 1,
           clipBehavior: Clip.antiAlias,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
