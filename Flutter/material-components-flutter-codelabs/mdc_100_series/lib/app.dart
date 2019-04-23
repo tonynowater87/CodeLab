@@ -57,22 +57,22 @@ class ShrineApp extends StatelessWidget {
 final ThemeData _kShrineTheme = _buildShrineTheme();
 
 ThemeData _buildShrineTheme() {
-  final ThemeData base = ThemeData.dark();
+  final ThemeData base = ThemeData.light();
   return base.copyWith(
-    accentColor: kShrineAltDarkGrey,
-    primaryColor: kShrineAltDarkGrey,
+    accentColor: kShrineBrown900,
+    primaryColor: kShrinePink100,
     buttonTheme: base.buttonTheme.copyWith(
-      buttonColor: kShrineAltYellow,
+      buttonColor: kShrinePink100,
       textTheme: ButtonTextTheme.normal,
     ),
-    scaffoldBackgroundColor: kShrineAltDarkGrey,
-    cardColor: kShrineAltDarkGrey,
+    scaffoldBackgroundColor: kShrineBackgroundWhite,
+    cardColor: kShrineBackgroundWhite,
     textSelectionColor: kShrinePink100,
     errorColor: kShrineErrorRed,
     textTheme: _buildShrineTextTheme(base.textTheme),
-    primaryTextTheme: _buildShrineTextTheme(base.primaryTextTheme),
     accentTextTheme: _buildShrineTextTheme(base.accentTextTheme),
-    primaryIconTheme: base.iconTheme.copyWith(color: kShrineAltYellow),
+    primaryTextTheme: _buildShrineTextTheme(base.primaryTextTheme),
+    primaryIconTheme: base.primaryIconTheme.copyWith(color: kShrineBrown900),
     /*inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(),
     ),*/
@@ -83,21 +83,20 @@ ThemeData _buildShrineTheme() {
   );
 }
 
+// TODO: Build a Shrine Text Theme (103);
 TextTheme _buildShrineTextTheme(TextTheme base) {
   return base
       .copyWith(
-        headline: base.headline.copyWith(
-          fontWeight: FontWeight.w500,
-        ),
-        title: base.title.copyWith(fontSize: 18.0),
-        caption: base.caption.copyWith(
-          fontWeight: FontWeight.w400,
-          fontSize: 14.0,
-        ),
-      )
+    headline: base.headline.copyWith(fontWeight: FontWeight.w500),
+    title: base.title.copyWith(fontSize: 18.0),
+    caption: base.caption.copyWith(
+      fontWeight: FontWeight.w400,
+      fontSize: 14.0,
+    ),
+  )
       .apply(
-        fontFamily: 'Rubik',
-        displayColor: kShrineSurfaceWhite,
-        bodyColor: kShrineSurfaceWhite,
-      );
+    fontFamily: 'Rubik',
+    displayColor: kShrineBrown900,
+    bodyColor: kShrineBrown900,
+  );
 }
