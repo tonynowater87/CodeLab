@@ -22,9 +22,9 @@ class HomePage extends StatelessWidget {
   // TODO: Add a variable for Category (104)
   @override
   Widget build(BuildContext context) {
-    // TODO: Return an AsymmetricView (104)
     // TODO: Pass Category variable to AsymmetricView (104)
-    return Scaffold(
+    return AsymmetricView(products: ProductsRepository.loadProducts(Category.all));
+    /*return Scaffold(
         appBar: AppBar(
           brightness: Brightness.dark, //可以調整status bar的顏色
           leading: IconButton(
@@ -56,7 +56,7 @@ class HomePage extends StatelessWidget {
           ],
         ),
         body: AsymmetricView(products: ProductsRepository.loadProducts(Category.all)),
-        /*body: GridView.count(
+        *//*body: GridView.count(
           crossAxisCount: 2,
           //設定有幾行
           childAspectRatio: 1 / 1,
@@ -67,8 +67,8 @@ class HomePage extends StatelessWidget {
           //項目直向間距
           padding: EdgeInsets.all(16.0),
           //GridView四邊的padding
-          children: generateCards(context),)*/
-        );
+          children: generateCards(context),)*//*
+        );*/
   }
 
   List<Card> generateCards(BuildContext context) {

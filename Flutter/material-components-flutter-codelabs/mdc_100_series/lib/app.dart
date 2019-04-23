@@ -13,7 +13,8 @@
 // limitations under the License.
 
 import 'package:flutter/material.dart';
-
+import 'backdrop.dart';
+import 'model/product.dart';
 import 'home.dart';
 import 'login.dart';
 import 'colors.dart';
@@ -25,14 +26,16 @@ class ShrineApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Shrine',
-      // TODO: Change home: to a Backdrop with a HomePage frontLayer (104)
-      home: HomePage(),
-      // TODO: Make currentCategory field take _currentCategory (104)
-      // TODO: Pass _currentCategory for frontLayer (104)
-      // TODO: Change backLayer field value to CategoryMenuPage (104)
+      home: Backdrop(
+          currentCategory: Category.all,
+          frontLayer: HomePage(),
+          backLayer: Container(
+            color: kShrinePink100,
+          ),
+          frontTitle: Text("SHRINE"),
+          backTitle: Text("MENU")),
       initialRoute: '/login',
       onGenerateRoute: _getRoute,
-      // TODO: Add a theme (103)
       theme: _kShrineTheme,
     );
   }
@@ -69,9 +72,7 @@ ThemeData _buildShrineTheme() {
     textTheme: _buildShrineTextTheme(base.textTheme),
     primaryTextTheme: _buildShrineTextTheme(base.primaryTextTheme),
     accentTextTheme: _buildShrineTextTheme(base.accentTextTheme),
-    primaryIconTheme: base.iconTheme.copyWith(
-        color: kShrineAltYellow
-    ),
+    primaryIconTheme: base.iconTheme.copyWith(color: kShrineAltYellow),
     /*inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(),
     ),*/
@@ -83,20 +84,20 @@ ThemeData _buildShrineTheme() {
 }
 
 TextTheme _buildShrineTextTheme(TextTheme base) {
-  return base.copyWith(
-    headline: base.headline.copyWith(
-      fontWeight: FontWeight.w500,
-    ),
-    title: base.title.copyWith(
-        fontSize: 18.0
-    ),
-    caption: base.caption.copyWith(
-      fontWeight: FontWeight.w400,
-      fontSize: 14.0,
-    ),
-  ).apply(
-    fontFamily: 'Rubik',
-    displayColor: kShrineSurfaceWhite,
-    bodyColor: kShrineSurfaceWhite,
-  );
+  return base
+      .copyWith(
+        headline: base.headline.copyWith(
+          fontWeight: FontWeight.w500,
+        ),
+        title: base.title.copyWith(fontSize: 18.0),
+        caption: base.caption.copyWith(
+          fontWeight: FontWeight.w400,
+          fontSize: 14.0,
+        ),
+      )
+      .apply(
+        fontFamily: 'Rubik',
+        displayColor: kShrineSurfaceWhite,
+        bodyColor: kShrineSurfaceWhite,
+      );
 }
