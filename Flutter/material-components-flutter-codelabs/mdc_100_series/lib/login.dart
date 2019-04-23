@@ -14,6 +14,7 @@
 
 import 'package:flutter/material.dart';
 import 'colors.dart';
+import 'supplemental/cut_corners_border.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -61,22 +62,27 @@ class _LoginPageState extends State<LoginPage> {
             ),
             ButtonBar(
               children: <Widget>[
-                IconButton(
+                /*IconButton(
                   icon: Image.asset('assets/diamond.png'),
                   onPressed: () {},
                 ),
                 FloatingActionButton(
+                  elevation: 8,
                   child: Text("FAB"),
                   onPressed: () {},
-                ),
+                ),*/
                 FlatButton(
                   child: Text('CLEAR'),
+                  shape: BeveledRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(7))),
                   onPressed: () {
                     userNameController.clear();
                     passwordController.clear();
                   },
                 ),
                 RaisedButton(
+                  elevation: 8,
+                  shape: CutCornersBorder(),
                   child: Text('NEXT'),
                   onPressed: () {
                     Navigator.pop(context);
