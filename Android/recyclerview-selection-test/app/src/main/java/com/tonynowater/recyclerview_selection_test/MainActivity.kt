@@ -2,25 +2,55 @@ package com.tonynowater.recyclerview_selection_test
 
 import android.os.Bundle
 import android.util.Log
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ActionMode
 import androidx.recyclerview.selection.SelectionTracker
-import androidx.recyclerview.selection.StableIdKeyProvider
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.fab
+import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.content_main.reccyclerview
-import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
     private var mSelectTracker: SelectionTracker<Long>? = null
+    private var mActionMode: ActionMode? = null
 
     private lateinit var mAdapter: MyListAdapter
+
+    private val mActionModeCallback  = object : ActionMode.Callback {
+        override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
+            Log.d(Constant.DEBUG, "onActionItemClicked${item?.itemId}")
+            when(item.itemId) {
+                R.id.action_delete -> {
+                    mSelectTracker?.selection?.sortedDescending()?.forEach {
+                        mAdapter.removeAt(it.toInt())
+                        mAdapter.notifyDataSetChanged()
+                    }
+                }
+            }
+            return true
+        }
+
+        override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
+            Log.d(Constant.DEBUG, "onCreateActionMode")
+            mode.menuInflater.inflate(R.menu.menu_delete_mode, menu)
+            return true
+        }
+
+        override fun onPrepareActionMode(mode: ActionMode, menu: Menu?): Boolean {
+            Log.d(Constant.DEBUG, "onPrepareActionMode")
+            return true
+        }
+
+        override fun onDestroyActionMode(mode: ActionMode) {
+            Log.d(Constant.DEBUG, "onDestroyActionMode")
+            mSelectTracker?.clearSelection()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener {
             val random = mAdapter.itemCount.toString()
             mAdapter.add(random)
+            updateActionModeTitle()//add data to update title
         }
     }
 
@@ -61,14 +92,6 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> {
-                mSelectTracker?.clearSelection()
-                true
-            }
-            R.id.action_delete -> {
-                mSelectTracker?.selection?.sortedDescending()?.forEach {
-                    mAdapter.removeAt(it.toInt())
-                    mAdapter.notifyDataSetChanged()
-                }
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -117,10 +140,14 @@ class MainActivity : AppCompatActivity() {
                             val selectItems: Int? = mSelectTracker?.selection?.size()
                             val isInMultiSelectionMode = selectItems != null && selectItems > 0
                             if (isInMultiSelectionMode) {
-                                // TODO: 2019-05-14
+                                if (mActionMode == null) {
+                                    mActionMode = startSupportActionMode(mActionModeCallback)
+                                }
                             } else {
-                                // TODO: 2019-05-14
+                                mActionMode?.finish()
+                                mActionMode = null
                             }
+                            updateActionModeTitle()
                         }
 
                         override fun onSelectionRefresh() {
@@ -136,5 +163,13 @@ class MainActivity : AppCompatActivity() {
                 }
             mAdapter.mTracker = mSelectTracker
         }
+    }
+
+    private fun updateActionModeTitle() {
+        mActionMode?.title = String.format(
+            getString(R.string.title_delete_mode),
+            mSelectTracker?.selection?.size() ?: 0,
+            mAdapter.itemCount
+        )
     }
 }
