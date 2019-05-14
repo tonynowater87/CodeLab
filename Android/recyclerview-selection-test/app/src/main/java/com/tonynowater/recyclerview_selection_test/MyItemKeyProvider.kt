@@ -12,15 +12,15 @@ class MyItemKeyProvider(private val recyclerView: RecyclerView) :
 
     override fun getPosition(key: Long): Int {
 
-        /*//solution 1
+        /*//solution 1 not ok
         val viewHolder = recyclerView.findViewHolderForItemId(key)
         return viewHolder?.layoutPosition ?: RecyclerView.NO_POSITION*/
 
-        //solution 2
+        /*//solution 2 display ok, delete ok
         val viewHolder = recyclerView.findViewHolderForItemId(key)
-        return viewHolder?.layoutPosition?:key.toInt()
+        return viewHolder?.layoutPosition?:key.toInt()*/
 
-        /*//solution 3
-        return key.toInt()*/
+        //solution 3 display ok, delete ok
+        return key.toInt()
     }
 }

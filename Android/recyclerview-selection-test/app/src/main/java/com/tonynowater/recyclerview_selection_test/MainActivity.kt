@@ -64,6 +64,13 @@ class MainActivity : AppCompatActivity() {
                 mSelectTracker?.clearSelection()
                 true
             }
+            R.id.action_delete -> {
+                mSelectTracker?.selection?.sortedDescending()?.forEach {
+                    mAdapter.removeAt(it.toInt())
+                    mAdapter.notifyDataSetChanged()
+                }
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -88,8 +95,8 @@ class MainActivity : AppCompatActivity() {
             mSelectTracker = SelectionTracker.Builder<Long>(
                 "multi-selection-test",
                 recyclerView,
-                /*MyItemKeyProvider(recyclerView),*/
-                StableIdKeyProvider(recyclerView),
+                MyItemKeyProvider(recyclerView),
+                /*StableIdKeyProvider(recyclerView),*/
                 MyLookup(recyclerView),
                 StorageStrategy.createLongStorage()
             ).withSelectionPredicate(

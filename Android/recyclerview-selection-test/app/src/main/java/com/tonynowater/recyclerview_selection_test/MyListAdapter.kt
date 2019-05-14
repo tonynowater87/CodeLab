@@ -43,6 +43,11 @@ class MyListAdapter : RecyclerView.Adapter<MyListAdapter.MyViewHolder>() {
         notifyItemInserted(insertPos)
     }
 
+    fun removeAt(position: Int) {
+        mTracker?.deselect(position.toLong())
+        data.removeAt(position)
+    }
+
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> = object : ItemDetailsLookup.ItemDetails<Long>() {
             override fun getSelectionKey(): Long = itemId

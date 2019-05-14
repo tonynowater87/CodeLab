@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Recyclerview_selection_test</string>
-    <string name="action_settings">Clear</string>
+    <string name="action_settings">Clear Selection</string>
+    <string name="action_delete_all">Delete All</string>
 </resources>
