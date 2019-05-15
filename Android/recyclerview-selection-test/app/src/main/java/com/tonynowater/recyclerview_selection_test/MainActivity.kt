@@ -89,6 +89,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         mAdapter = MyListAdapter()
+        reccyclerview.addItemDecoration(DividerSpaceDecoration(resources.getDimensionPixelSize(R.dimen.spacing_large)))
         reccyclerview.layoutManager = LinearLayoutManager(this)
         reccyclerview.adapter = mAdapter
         buildSelectionTracker(recyclerView = reccyclerview)
