@@ -2,5 +2,6 @@
     <string name="app_name">Recyclerview_selection_test</string>
     <string name="action_settings">Settings</string>
     <string name="action_delete_all">Delete All</string>
+    <string name="action_select_all">Select All</string>
     <string name="title_delete_mode">Delete(%d/%d)</string>
 </resources>

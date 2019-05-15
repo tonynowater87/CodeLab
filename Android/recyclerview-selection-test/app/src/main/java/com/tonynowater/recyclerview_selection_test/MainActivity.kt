@@ -21,22 +21,49 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mAdapter: MyListAdapter
 
-    private val mActionModeCallback  = object : ActionMode.Callback {
+    private val mActionModeCallback = object : ActionMode.Callback {
+        private var mIsSelectedAll: Boolean = false
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             Log.d(Constant.DEBUG, "onActionItemClicked${item?.itemId}")
-            when(item.itemId) {
+            when (item.itemId) {
                 R.id.action_delete -> {
                     mSelectTracker?.selection?.sortedDescending()?.forEach {
                         mAdapter.removeAt(it.toInt())
                         mAdapter.notifyDataSetChanged()
                     }
                 }
+                R.id.action_select_all -> {
+                    if (mIsSelectedAll) {
+                        mIsSelectedAll = false
+                        selectedAll(mIsSelectedAll)
+                    } else {
+                        mIsSelectedAll = true
+                        selectedAll(mIsSelectedAll)
+                    }
+                }
             }
             return true
         }
 
+        private fun selectedAll(selectedAll: Boolean) {
+            mAdapter.data.forEachIndexed { index, _ ->
+                val position = index.toLong()
+                val positionIsSelected = mSelectTracker?.isSelected(position)
+                Log.d(Constant.DEBUG, "action_select_all:$index $positionIsSelected")
+                when (selectedAll) {
+                    true -> {
+                        mSelectTracker?.select(position)
+                    }
+                    false -> {
+                        mSelectTracker?.deselect(position)
+                    }
+                }
+            }
+        }
+
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             Log.d(Constant.DEBUG, "onCreateActionMode")
+            mIsSelectedAll = false
             mode.menuInflater.inflate(R.menu.menu_delete_mode, menu)
             return true
         }
