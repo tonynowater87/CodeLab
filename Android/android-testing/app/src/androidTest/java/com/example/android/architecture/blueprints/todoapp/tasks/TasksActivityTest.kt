@@ -17,6 +17,7 @@ package com.example.android.architecture.blueprints.todoapp.tasks
 
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
+import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.IdlingRegistry
@@ -96,12 +97,19 @@ class TasksActivityTest {
     fun createTask() {
         // start up Tasks screen
         // TODO
+        val activityScenario = ActivityScenario.launch(TasksActivity::class.java)
+        dataBindingIdlingResource.monitorActivity(activityScenario)
 
         // Click on the "+" button, add details, and save
         // TODO
+        onView(withId(R.id.fab_add_task)).perform(click())
+        onView(withId(R.id.add_task_title)).perform(typeText("title"))
+        onView(withId(R.id.add_task_description)).perform(typeText("description"))
+        onView(withId(R.id.fab_save_task)).perform(click())
 
         // Then verify task is displayed on screen
         // TODO
+        onView(withText("title")).check(matches(isDisplayed()))
     }
 
     @Test
