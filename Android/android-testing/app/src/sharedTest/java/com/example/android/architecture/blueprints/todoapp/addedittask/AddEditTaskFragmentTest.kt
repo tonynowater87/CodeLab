@@ -40,6 +40,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -99,6 +100,10 @@ class AddEditTaskFragmentTest {
 
         // THEN - Verify that the repository saved the task
         // TODO
+        val tasks = (repository.getTasksBlocking(forceUpdate = true) as Result.Success).data
+        assertEquals(tasks.size, 1)
+        assertEquals(tasks[0].title, "title")
+        assertEquals(tasks[0].description, "description")
     }
 
     @Test

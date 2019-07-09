@@ -21,6 +21,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.ServiceLocator
+import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskFragment
+import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskFragmentDirections
 import com.example.android.architecture.blueprints.todoapp.data.Task
 import com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository
@@ -67,12 +69,22 @@ class TasksFragmentTest {
     fun clickAddTaskButton_navigateToAddEditFragment() {
         // GIVEN - On the home screen
         // TODO
+        val scenario = launchFragmentInContainer<TasksFragment>(themeResId = R.style.AppTheme)
+        val navController = mock(NavController::class.java)
+        scenario.onFragment {
+            Navigation.setViewNavController(it.view!!, navController)
+        }
 
         // WHEN - Click on the "+" button
         // TODO
+        onView(withId(R.id.fab_add_task)).perform(click())
 
         // THEN - Verify that we navigate to the add screen
         // TODO
+        verify(navController)
+            .navigate(TasksFragmentDirections
+                          .actionTasksFragmentToAddEditTaskFragment(TASKID = null,
+                                                                    title = "New Task"))
     }
 
     @Test
