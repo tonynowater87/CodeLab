@@ -21,4 +21,7 @@ object LoadLibrary {
     external fun sumIntegers(first: Int, second: Int): Int
 
     external fun sayHelloToMe(name: String, isFemale: Boolean): String
+
+    @Throws(IllegalArgumentException::class)
+    external fun throwExceptionFromNative(description: String)
 }

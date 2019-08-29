@@ -5,6 +5,16 @@
 #include <stdio.h>
 #include <iostream>
 
+//You can load native code from shared libraries with the standard System.loadLibrary call. In this time the method JNI_onLoad is invoked.
+extern "C" JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved) {
+        __android_log_print(ANDROID_LOG_INFO,  __FUNCTION__, "onLoad");
+        JNIEnv* env;
+        if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {
+            return -1;
+        }
+        return JNI_VERSION_1_6;
+}
+
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_tonynowater_hello_1cmake_LoadLibrary_stringFromJNI(
         JNIEnv *env,
@@ -61,5 +71,18 @@ Java_com_tonynowater_hello_1cmake_LoadLibrary_sayHelloToMe(
     std::string fullName = title + namePointer;
 
     return env->NewStringUTF(fullName.c_str());
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_tonynowater_hello_1cmake_LoadLibrary_throwExceptionFromNative(
+                JNIEnv *env,
+                jobject instance,
+                jstring description) {
+
+    jclass clazz = env->FindClass("java/lang/IllegalArgumentException");
+    if (clazz != NULL) {
+        env->ThrowNew(clazz, env->GetStringUTFChars(description, NULL));
+    }
+    env->DeleteLocalRef(clazz);
 }
 
