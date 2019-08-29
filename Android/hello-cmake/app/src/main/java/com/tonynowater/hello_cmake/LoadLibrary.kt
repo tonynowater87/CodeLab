@@ -3,11 +3,14 @@ package com.tonynowater.hello_cmake
 import android.util.Log
 
 object LoadLibrary {
+
+    var static: Int = 3
+
     // Used to load the 'native-lib' library on application startup.
     init {
-        Log.d("DEBUG", "init loadLibrary start")
+        Log.d("DEBUG", "==== loadLibrary start ==== ")
         System.loadLibrary("native-lib")
-        Log.d("DEBUG", "init loadLibrary end")
+        Log.d("DEBUG", "==== loadLibrary end ==== ")
     }
 
     /**
@@ -24,4 +27,6 @@ object LoadLibrary {
 
     @Throws(IllegalArgumentException::class)
     external fun throwExceptionFromNative(description: String)
+
+    external fun readKotlinStaticValueFromNative()
 }

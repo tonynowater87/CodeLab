@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun click(view: View) {
-        LoadLibrary.throwExceptionFromNative("throwExceptionFromNative!!!")
+        //LoadLibrary.throwExceptionFromNative("throwExceptionFromNative!!!")
+        LoadLibrary.readKotlinStaticValueFromNative()
+        LoadLibrary.static = 0
     }
 }
