@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         Log.d("DEBUG", "onCreate")
         // Example of a call to a native method
-        sample_text.text = LoadLibrary.stringFromJNI()
+        sample_text.text = "${LoadLibrary.stringFromJNI()} ${LoadLibrary.sumIntegers(1, 2)} \n${LoadLibrary.sayHelloToMe("Tony", false)}"
         LoadLibrary.voidFromJNI()
     }
 }

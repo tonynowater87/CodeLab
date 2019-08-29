@@ -17,4 +17,8 @@ object LoadLibrary {
     external fun stringFromJNI(): String
 
     external fun voidFromJNI()
+
+    external fun sumIntegers(first: Int, second: Int): Int
+
+    external fun sayHelloToMe(name: String, isFemale: Boolean): String
 }
