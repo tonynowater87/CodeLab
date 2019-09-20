@@ -19,7 +19,7 @@
              xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- A transition describes an animation via start and end state -->
     <Transition
-            
+
             app:constraintSetStart="@+id/start"
             app:constraintSetEnd="@+id/end"
             app:duration="3000">
@@ -49,9 +49,43 @@
             />
 
             <!-- TODO: Add KeyAttributes to rotate and resize @id/moon -->
+            <KeyAttribute
+                app:framePosition="50"
+                app:motionTarget="@id/moon"
+                android:scaleY="2.0"
+                android:scaleX="2.0"
+                android:rotation="360"
+                />
 
+            <KeyAttribute
+                app:framePosition="100"
+                app:motionTarget="@id/moon"
+                android:rotation="-720"
+                />
+
+            <!-- rotate background -->
+            <!--<KeyAttribute
+                app:framePosition="50"
+                android:rotation="180" />-->
+
+            <KeyAttribute
+                app:framePosition="25"
+                android:translationX="-100dp" />
+
+            <KeyAttribute
+                app:framePosition="50"
+                android:translationY="100dp" />
+
+            <KeyAttribute
+                app:framePosition="75"
+                android:scaleX="2"
+                android:scaleY="2" />
 
             <!-- TODO: Add KeyAttribute to delay the appearance of @id/credits -->
+            <KeyAttribute
+                app:framePosition="75"
+                app:motionTarget="@id/credits"
+                android:alpha="0.0" />
 
         </KeyFrameSet>
     </Transition>
@@ -60,7 +94,7 @@
     <ConstraintSet android:id="@+id/start">
         <Constraint
             android:id="@id/moon"
-            
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +104,7 @@
             android:id="@id/credits"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:alpha="0.0"
+            android:alpha="1.0"
             android:layout_marginStart="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/moon"
