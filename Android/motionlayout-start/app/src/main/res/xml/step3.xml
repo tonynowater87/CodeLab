@@ -63,9 +63,10 @@
             <KeyPosition
                 app:curveFit="spline"
                 app:framePosition="50"
-                app:keyPositionType="parentRelative"
+                app:keyPositionType="pathRelative"
                 app:motionTarget="@id/moon"
-                app:percentY="0.5" />
+                app:percentX="0.2"
+                app:percentY="-0.5" />
 
            <!-- <KeyPosition
                 app:curveFit="spline"
