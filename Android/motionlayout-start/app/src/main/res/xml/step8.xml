@@ -57,7 +57,7 @@
             <KeyAttribute
                 app:framePosition="100"
                 app:motionTarget="@id/background"
-                android:translationY="500dp" />
+                android:translationY="50dp" />
         </KeyFrameSet>
     </Transition>
 

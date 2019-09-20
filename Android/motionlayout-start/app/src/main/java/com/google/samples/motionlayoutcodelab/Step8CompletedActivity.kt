@@ -16,6 +16,7 @@
 package com.google.samples.motionlayoutcodelab
 
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,6 +39,7 @@ class Step8CompletedActivity : AppCompatActivity() {
 
         val listener = AppBarLayout.OnOffsetChangedListener { unused, verticalOffset ->
             val seekPosition = -verticalOffset / appBarLayout.totalScrollRange.toFloat()
+            Log.d("[Tony]", "seekPosition:$seekPosition verticalOffset:$verticalOffset totalScrollRange:${appBarLayout.totalScrollRange}")
             motionLayout.progress = seekPosition
         }
 
